@@ -1,4 +1,4 @@
-package net.unit8.sillage.example;
+package net.unit8.sillage.example.user;
 
 import net.unit8.sillage.ResourceEngine;
 import net.unit8.sillage.data.ClassResource;
@@ -21,9 +21,17 @@ public class UserController {
 	}
 
 	@RequestMapping("/users")
-	public Object greeting(HttpServletRequest request,
+	public Object users(HttpServletRequest request,
 						   HttpServletResponse response) {
 		ClassResource resource = resourceFactory.create(UsersResource.class);
 		return resourceEngine.run(resource, request, response);
 	}
+
+	@RequestMapping("/user/{id}")
+	public Object user(HttpServletRequest request,
+					   HttpServletResponse response) {
+		ClassResource resource = resourceFactory.create(UserResource.class);
+		return resourceEngine.run(resource, request, response);
+	}
+
 }

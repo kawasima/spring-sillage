@@ -14,7 +14,7 @@ import java.util.Optional;
 import java.util.function.Function;
 
 public class Handler implements Node<Object> {
-    private static final Logger LOG = LoggerFactory.getLogger("kotowari.restful.decision");
+    private static final Logger LOG = LoggerFactory.getLogger(Handler.class);
 
     private final DecisionPoint point;
     private final int statusCode;

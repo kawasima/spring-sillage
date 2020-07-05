@@ -1,8 +1,9 @@
-package net.unit8.sillage.example;
+package net.unit8.sillage.example.user;
 
 import net.unit8.sillage.Decision;
 import net.unit8.sillage.data.RestContext;
 import net.unit8.sillage.example.entity.User;
+import net.unit8.sillage.example.user.boundary.UserCreateRequest;
 import net.unit8.sillage.resource.AllowedMethods;
 import net.unit8.sillage.resource.DecisionContext;
 import org.springframework.beans.BeanUtils;

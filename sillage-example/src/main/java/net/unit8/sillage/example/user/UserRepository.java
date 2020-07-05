@@ -1,4 +1,4 @@
-package net.unit8.sillage.example;
+package net.unit8.sillage.example.user;
 
 import net.unit8.sillage.example.entity.User;
 import org.springframework.data.repository.CrudRepository;

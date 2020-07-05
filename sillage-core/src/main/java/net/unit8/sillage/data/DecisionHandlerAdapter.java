@@ -23,7 +23,8 @@ import org.springframework.web.accept.ContentNegotiationManager;
 import org.springframework.web.bind.support.*;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.context.request.ServletWebRequest;
-import org.springframework.web.context.request.async.*;
+import org.springframework.web.context.request.async.CallableProcessingInterceptor;
+import org.springframework.web.context.request.async.DeferredResultProcessingInterceptor;
 import org.springframework.web.method.ControllerAdviceBean;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.method.annotation.*;
@@ -71,19 +72,12 @@ public class DecisionHandlerAdapter extends AbstractHandlerMethodAdapter
 
 	private List<HttpMessageConverter<?>> messageConverters;
 
-	private List<Object> requestResponseBodyAdvice = new ArrayList<>();
+	private final List<Object> requestResponseBodyAdvice = new ArrayList<>();
 
 	@Nullable
 	private WebBindingInitializer webBindingInitializer;
 
 	private AsyncTaskExecutor taskExecutor = new SimpleAsyncTaskExecutor("MvcAsync");
-
-	@Nullable
-	private Long asyncRequestTimeout;
-
-	private CallableProcessingInterceptor[] callableInterceptors = new CallableProcessingInterceptor[0];
-
-	private DeferredResultProcessingInterceptor[] deferredResultInterceptors = new DeferredResultProcessingInterceptor[0];
 
 	private ReactiveAdapterRegistry reactiveAdapterRegistry = ReactiveAdapterRegistry.getSharedInstance();
 
@@ -314,64 +308,6 @@ public class DecisionHandlerAdapter extends AbstractHandlerMethodAdapter
 	@Nullable
 	public WebBindingInitializer getWebBindingInitializer() {
 		return this.webBindingInitializer;
-	}
-
-	/**
-	 * Set the default {@link AsyncTaskExecutor} to use when a controller method
-	 * return a {@link Callable}. Controller methods can override this default on
-	 * a per-request basis by returning an {@link WebAsyncTask}.
-	 * <p>By default a {@link SimpleAsyncTaskExecutor} instance is used.
-	 * It's recommended to change that default in production as the simple executor
-	 * does not re-use threads.
-	 */
-	public void setTaskExecutor(AsyncTaskExecutor taskExecutor) {
-		this.taskExecutor = taskExecutor;
-	}
-
-	/**
-	 * Specify the amount of time, in milliseconds, before concurrent handling
-	 * should time out. In Servlet 3, the timeout begins after the main request
-	 * processing thread has exited and ends when the request is dispatched again
-	 * for further processing of the concurrently produced result.
-	 * <p>If this value is not set, the default timeout of the underlying
-	 * implementation is used.
-	 * @param timeout the timeout value in milliseconds
-	 */
-	public void setAsyncRequestTimeout(long timeout) {
-		this.asyncRequestTimeout = timeout;
-	}
-
-	/**
-	 * Configure {@code CallableProcessingInterceptor}'s to register on async requests.
-	 * @param interceptors the interceptors to register
-	 */
-	public void setCallableInterceptors(List<CallableProcessingInterceptor> interceptors) {
-		this.callableInterceptors = interceptors.toArray(new CallableProcessingInterceptor[0]);
-	}
-
-	/**
-	 * Configure {@code DeferredResultProcessingInterceptor}'s to register on async requests.
-	 * @param interceptors the interceptors to register
-	 */
-	public void setDeferredResultInterceptors(List<DeferredResultProcessingInterceptor> interceptors) {
-		this.deferredResultInterceptors = interceptors.toArray(new DeferredResultProcessingInterceptor[0]);
-	}
-
-	/**
-	 * Configure the registry for reactive library types to be supported as
-	 * return values from controller methods.
-	 * @since 5.0.5
-	 */
-	public void setReactiveAdapterRegistry(ReactiveAdapterRegistry reactiveAdapterRegistry) {
-		this.reactiveAdapterRegistry = reactiveAdapterRegistry;
-	}
-
-	/**
-	 * Return the configured reactive type registry of adapters.
-	 * @since 5.0
-	 */
-	public ReactiveAdapterRegistry getReactiveAdapterRegistry() {
-		return this.reactiveAdapterRegistry;
 	}
 
 	/**

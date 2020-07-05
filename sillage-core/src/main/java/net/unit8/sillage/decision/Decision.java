@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 import java.util.function.Function;
 
 public class Decision implements Node<Node<?>> {
-    private static final Logger LOG = LoggerFactory.getLogger("kotowari.restful.decision");
+    private static final Logger LOG = LoggerFactory.getLogger(Decision.class);
 
     private final DecisionPoint point;
     private final Function<RestContext, ?> test;

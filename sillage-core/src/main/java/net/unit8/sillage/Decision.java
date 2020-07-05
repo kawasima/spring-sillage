@@ -1,7 +1,6 @@
 package net.unit8.sillage;
 
 import org.springframework.http.HttpMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.lang.annotation.*;
 

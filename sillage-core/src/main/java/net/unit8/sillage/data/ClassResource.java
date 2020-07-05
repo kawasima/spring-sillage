@@ -13,16 +13,14 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class ClassResource implements Resource {
-    private Map<DecisionPoint, Function<RestContext, ?>> functions;
-    private Resource parent;
-    private Object instance;
-    private Function<RestContext, ?> methodAllowedFunc;
+    private final Map<DecisionPoint, Function<RestContext, ?>> functions;
+    private final Resource parent;
+    private final Function<RestContext, ?> methodAllowedFunc;
 
     public ClassResource(Object instance,
                          Resource parent,
                          DecisionHandlerAdapter handlerAdapter) {
         this.parent = parent;
-        this.instance = instance;
         Class<?> resourceClass = instance.getClass();
         Set<HttpMethod> allowedMethods = parseAllowedMethods(resourceClass);
         methodAllowedFunc = context -> allowedMethods.contains(context.getMethod());

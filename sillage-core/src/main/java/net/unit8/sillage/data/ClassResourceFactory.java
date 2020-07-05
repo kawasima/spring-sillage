@@ -2,15 +2,12 @@ package net.unit8.sillage.data;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
-import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
-
-import java.lang.reflect.InvocationTargetException;
 
 @Component
 public class ClassResourceFactory {
-    private DecisionHandlerAdapter handlerAdapter;
-    private ApplicationContext context;
-    private Resource parent;
+    private final DecisionHandlerAdapter handlerAdapter;
+    private final ApplicationContext context;
+    private final Resource parent;
     public ClassResourceFactory(DecisionHandlerAdapter handlerAdapter,
                                 ApplicationContext context) {
         this.handlerAdapter = handlerAdapter;

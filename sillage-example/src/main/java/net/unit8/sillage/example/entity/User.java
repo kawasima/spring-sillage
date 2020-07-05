@@ -13,6 +13,7 @@ public class User {
     private String email;
     private String lastName;
     private String firstName;
+    private String version;
 
     public Long getId() {
         return id;
@@ -44,5 +45,13 @@ public class User {
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
+    }
+
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
     }
 }
