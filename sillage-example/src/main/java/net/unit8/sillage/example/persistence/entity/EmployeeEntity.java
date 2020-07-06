@@ -1,18 +1,18 @@
-package net.unit8.sillage.example.entity;
+package net.unit8.sillage.example.persistence.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
-public class User {
+@Table(name = "employee")
+public class EmployeeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String email;
     private String lastName;
     private String firstName;
+    private Long salary;
+    private String currencyUnit;
     private String version;
 
     public Long getId() {
@@ -45,6 +45,22 @@ public class User {
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
+    }
+
+    public Long getSalary() {
+        return salary;
+    }
+
+    public void setSalary(Long salary) {
+        this.salary = salary;
+    }
+
+    public String getCurrencyUnit() {
+        return currencyUnit;
+    }
+
+    public void setCurrencyUnit(String currencyUnit) {
+        this.currencyUnit = currencyUnit;
     }
 
     public String getVersion() {

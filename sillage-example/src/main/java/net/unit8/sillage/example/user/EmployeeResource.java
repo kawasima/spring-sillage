@@ -2,8 +2,11 @@ package net.unit8.sillage.example.user;
 
 import net.unit8.sillage.Decision;
 import net.unit8.sillage.data.RestContext;
-import net.unit8.sillage.example.entity.User;
+import net.unit8.sillage.example.domain.Employee;
+import net.unit8.sillage.example.domain.EmployeeId;
 import net.unit8.sillage.example.user.boundary.UserUpdateRequest;
+import net.unit8.sillage.example.user.service.EmployeeModifyService;
+import net.unit8.sillage.example.user.service.EmployeeSearchService;
 import net.unit8.sillage.resource.AllowedMethods;
 import net.unit8.sillage.resource.DecisionContext;
 import org.springframework.beans.BeanUtils;
@@ -25,13 +28,16 @@ import static net.unit8.sillage.DecisionPoint.*;
 
 @Component
 @AllowedMethods({HttpMethod.GET, HttpMethod.PUT, HttpMethod.DELETE})
-public class UserResource {
+public class EmployeeResource {
     private final Validator validator;
-    private final UserRepository userRepository;
+    private final EmployeeSearchService employeeSearchService;
+    private final EmployeeModifyService employeeModifyService;
 
-    public UserResource(UserRepository userRepository,
-                        Validator validator) {
-        this.userRepository = userRepository;
+    public EmployeeResource(EmployeeSearchService employeeSearchService,
+                            EmployeeModifyService  employeeModifyService,
+                            Validator validator) {
+        this.employeeSearchService = employeeSearchService;
+        this.employeeModifyService = employeeModifyService;
         this.validator = validator;
     }
 
@@ -53,29 +59,32 @@ public class UserResource {
 
     @Decision(EXISTS)
     public boolean exists(@PathVariable Long id, RestContext context) {
-        userRepository.findById(id).ifPresent(context::putValue);
-        return context.getValue(User.class).isPresent();
+        Employee employee = employeeSearchService.findById(new EmployeeId(id));
+        if (employee != null) {
+            context.putValue(employee);
+        }
+        return employee != null;
     }
 
     @Decision(HANDLE_OK)
-    public User user(@DecisionContext User user) {
-        return user;
+    public Employee user(@DecisionContext Employee employee) {
+        return employee;
     }
 
     @Decision(DELETE)
-    public void delete(@DecisionContext User user) {
-        userRepository.delete(user);
+    public void delete(@DecisionContext Employee employee) {
+        employeeModifyService.save(employee);
     }
 
     @Decision(PUT)
-    public void update(@DecisionContext User user,
+    public void update(@DecisionContext Employee employee,
                        @DecisionContext UserUpdateRequest updateRequest) {
-        BeanUtils.copyProperties(updateRequest, user);
-        userRepository.save(user);
+        BeanUtils.copyProperties(updateRequest, employee);
+        employeeModifyService.save(employee);
     }
 
     @Decision(NEW)
-    public boolean isNew(@DecisionContext User user) {
-        return user == null;
+    public boolean isNew(@DecisionContext Employee employee) {
+        return employee == null;
     }
 }

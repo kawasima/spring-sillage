@@ -10,27 +10,27 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @RestController
-public class UserController {
+public class EmployeeController {
 	private final ResourceEngine resourceEngine;
 	private final ClassResourceFactory resourceFactory;
 
-	public UserController(ResourceEngine resourceEngine,
-						  ClassResourceFactory resourceFactory) {
+	public EmployeeController(ResourceEngine resourceEngine,
+							  ClassResourceFactory resourceFactory) {
 		this.resourceEngine = resourceEngine;
 		this.resourceFactory = resourceFactory;
 	}
 
-	@RequestMapping("/users")
-	public Object users(HttpServletRequest request,
+	@RequestMapping("/employees")
+	public Object employees(HttpServletRequest request,
 						   HttpServletResponse response) {
-		ClassResource resource = resourceFactory.create(UsersResource.class);
+		ClassResource resource = resourceFactory.create(EmployeesResource.class);
 		return resourceEngine.run(resource, request, response);
 	}
 
-	@RequestMapping("/user/{id}")
-	public Object user(HttpServletRequest request,
+	@RequestMapping("/employee/{id}")
+	public Object employee(HttpServletRequest request,
 					   HttpServletResponse response) {
-		ClassResource resource = resourceFactory.create(UserResource.class);
+		ClassResource resource = resourceFactory.create(EmployeeResource.class);
 		return resourceEngine.run(resource, request, response);
 	}
 

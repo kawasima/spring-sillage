@@ -34,7 +34,7 @@ public class RestServiceApplication {
 
     LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
     factory.setJpaVendorAdapter(vendorAdapter);
-    factory.setPackagesToScan("net.unit8.sillage.example.entity");
+    factory.setPackagesToScan("net.unit8.sillage.example.persistence.entity");
     factory.setDataSource(dataSource());
     return factory;
   }
