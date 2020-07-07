@@ -17,13 +17,18 @@ import java.util.List;
 @Configuration
 public class SillageConfiguration {
     @Bean
-    public ClassResourceFactory classResourceFactory(ApplicationContext context) {
-        DecisionHandlerAdapter adapter = new DecisionHandlerAdapter();
-        Jackson2ObjectMapperBuilder builder = new Jackson2ObjectMapperBuilder()
+    public Jackson2ObjectMapperBuilder jackson2ObjectMapperBuilder() {
+        return  new Jackson2ObjectMapperBuilder()
                 .indentOutput(true)
                 .dateFormat(new SimpleDateFormat("yyyy-MM-dd"))
                 .modulesToInstall(new ProblemModule().withStackTraces())
                 .modulesToInstall(new ParameterNamesModule());
+    }
+
+    @Bean
+    public ClassResourceFactory classResourceFactory(ApplicationContext context,
+                                                     Jackson2ObjectMapperBuilder builder) {
+        DecisionHandlerAdapter adapter = new DecisionHandlerAdapter();
         adapter.getMessageConverters().add(
                 new MappingJackson2HttpMessageConverter(builder.build()));
         adapter.setApplicationContext(context);

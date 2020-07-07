@@ -12,7 +12,7 @@
 	<packaging>jar</packaging>
 
 	<name>sillage-core</name>
-	<description>Demo project for Spring Boot</description>
+	<description>A RESTful API framework for Spring MVC</description>
 
 	<properties>
 		<java.version>11</java.version>

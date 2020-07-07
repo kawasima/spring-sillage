@@ -67,9 +67,9 @@ public class PromotionResource {
     }
 
     @Decision(POST)
-    public void promote(@DecisionContext Employee employee,
-                        @DecisionContext PromotionCreateRequest createRequest) {
+    public Employee promote(@DecisionContext Employee employee,
+                            @DecisionContext PromotionCreateRequest createRequest) {
         Money promotedSalary = Money.of(createRequest.getAmount(), createRequest.getCurrencyUnit());
-        employeePromoteService.promote(employee, promotedSalary);
+        return employeePromoteService.promote(employee, promotedSalary);
     }
 }
