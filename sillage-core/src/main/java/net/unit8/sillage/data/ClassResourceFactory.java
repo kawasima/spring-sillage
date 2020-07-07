@@ -1,5 +1,7 @@
 package net.unit8.sillage.data;
 
+import net.unit8.sillage.resource.DefaultResource;
+import net.unit8.sillage.resource.Resource;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 

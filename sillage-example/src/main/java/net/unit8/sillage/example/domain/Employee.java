@@ -1,9 +1,8 @@
 package net.unit8.sillage.example.domain;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-
 import javax.money.MonetaryAmount;
 import java.io.Serializable;
+import java.util.UUID;
 
 public class Employee implements Serializable {
     private final EmployeeId id;
@@ -11,17 +10,20 @@ public class Employee implements Serializable {
     private final LastName lastName;
     private final EmailAddress emailAddress;
     private final MonetaryAmount salary;
+    private final UUID version;
 
     public Employee(EmployeeId id,
                     FirstName firstName,
                     LastName lastName,
                     EmailAddress emailAddress,
-                    MonetaryAmount salary) {
+                    MonetaryAmount salary,
+                    UUID version) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.emailAddress = emailAddress;
         this.salary = salary;
+        this.version = version;
     }
 
     public Employee(FirstName firstName,
@@ -29,6 +31,7 @@ public class Employee implements Serializable {
                     EmailAddress emailAddress,
                     MonetaryAmount salary) {
         id = null;
+        version = UUID.randomUUID();
         this.firstName = firstName;
         this.lastName = lastName;
         this.emailAddress = emailAddress;
@@ -53,5 +56,9 @@ public class Employee implements Serializable {
 
     public MonetaryAmount getSalary() {
         return salary;
+    }
+
+    public UUID getVersion() {
+        return version;
     }
 }

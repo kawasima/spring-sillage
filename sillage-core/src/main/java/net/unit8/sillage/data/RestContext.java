@@ -1,6 +1,7 @@
 package net.unit8.sillage.data;
 
 import net.unit8.sillage.DecisionPoint;
+import net.unit8.sillage.resource.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 

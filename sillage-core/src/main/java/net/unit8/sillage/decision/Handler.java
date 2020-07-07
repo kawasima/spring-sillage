@@ -5,12 +5,10 @@ import net.unit8.sillage.data.RestContext;
 import net.unit8.sillage.data.SimpleMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.zalando.problem.Problem;
 import org.zalando.problem.Status;
 
-import java.util.Optional;
 import java.util.function.Function;
 
 public class Handler implements Node<Object> {
@@ -52,12 +50,11 @@ public class Handler implements Node<Object> {
                 message = fres;
             }
         }
+        return message;
+    }
 
-        ResponseEntity<Object> response =  new ResponseEntity<>(message, HttpStatus.valueOf(statusCode));
-        Optional.ofNullable(context.getHeaders())
-                .ifPresent(headers -> response.getHeaders().putAll(headers));
-
-        return response;
+    public int getStatusCode() {
+        return statusCode;
     }
 
     @Override

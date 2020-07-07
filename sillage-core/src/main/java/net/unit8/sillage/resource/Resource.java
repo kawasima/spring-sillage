@@ -1,6 +1,7 @@
-package net.unit8.sillage.data;
+package net.unit8.sillage.resource;
 
 import net.unit8.sillage.DecisionPoint;
+import net.unit8.sillage.data.RestContext;
 
 import java.util.function.Function;
 

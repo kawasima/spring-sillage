@@ -1,6 +1,6 @@
 package net.unit8.sillage;
 
-import net.unit8.sillage.data.Resource;
+import net.unit8.sillage.resource.Resource;
 import net.unit8.sillage.data.RestContext;
 import net.unit8.sillage.decision.Decision;
 import net.unit8.sillage.decision.Handler;
@@ -8,16 +8,15 @@ import net.unit8.sillage.decision.Node;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.zalando.problem.Problem;
 import org.zalando.problem.Status;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Function;
 
 import static net.unit8.sillage.DecisionPoint.*;
@@ -42,18 +41,29 @@ public class ResourceEngine {
                 if (decisionNode instanceof Decision) {
                     decisionNode = ((Decision) decisionNode).execute(context);
                 } else if (decisionNode instanceof Handler) {
-                    return ((Handler) decisionNode).execute(context);
+                    Object message = ((Handler) decisionNode).execute(context);
+                    if (!(message instanceof ResponseEntity)) {
+                        ResponseEntity.BodyBuilder bodyBuilder = ResponseEntity.status(
+                                context.getStatus().orElse(((Handler) decisionNode).getStatusCode()));
+                        Optional.ofNullable(context.getResourceFunction(ETAG))
+                                .map(genETag -> Objects.toString(genETag.apply(context), null))
+                                .ifPresent(etag -> bodyBuilder.eTag('"' + etag + '"'));
+                        message = bodyBuilder.body(message);
+                    }
+                    return message;
                 }
             } while (decisionNode != null);
         } catch(Exception e) {
             LOG.error("Error occurs at handling resource", e);
-            return Problem.builder()
-                    .withStatus(Status.INTERNAL_SERVER_ERROR)
-                    .withDetail(printStackTrace ? e.toString() : null);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Problem.builder()
+                            .withStatus(Status.INTERNAL_SERVER_ERROR)
+                            .withDetail(printStackTrace ? e.toString() : null));
         }
-        return Problem.builder()
-                .withStatus(Status.INTERNAL_SERVER_ERROR)
-                .withDetail("Handler not defined");
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(Problem.builder()
+                        .withStatus(Status.INTERNAL_SERVER_ERROR)
+                        .withDetail("Handler not defined"));
     }
 
     /**

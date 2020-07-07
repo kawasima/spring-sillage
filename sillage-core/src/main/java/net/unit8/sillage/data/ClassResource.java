@@ -3,6 +3,7 @@ package net.unit8.sillage.data;
 import net.unit8.sillage.Decision;
 import net.unit8.sillage.DecisionPoint;
 import net.unit8.sillage.resource.AllowedMethods;
+import net.unit8.sillage.resource.Resource;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.method.HandlerMethod;
 

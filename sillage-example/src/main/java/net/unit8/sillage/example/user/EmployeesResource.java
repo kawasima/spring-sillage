@@ -6,8 +6,7 @@ import net.unit8.sillage.example.domain.EmailAddress;
 import net.unit8.sillage.example.domain.Employee;
 import net.unit8.sillage.example.domain.FirstName;
 import net.unit8.sillage.example.domain.LastName;
-import net.unit8.sillage.example.persistence.entity.EmployeeEntity;
-import net.unit8.sillage.example.user.boundary.UserCreateRequest;
+import net.unit8.sillage.example.user.boundary.EmployeeCreateRequest;
 import net.unit8.sillage.example.user.service.EmployeeModifyService;
 import net.unit8.sillage.example.user.service.EmployeeSearchService;
 import net.unit8.sillage.resource.AllowedMethods;
@@ -25,7 +24,6 @@ import org.zalando.problem.Status;
 import org.zalando.problem.violations.ConstraintViolationProblem;
 import org.zalando.problem.violations.Violation;
 
-import javax.money.CurrencyUnit;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -48,7 +46,7 @@ public class EmployeesResource {
 
     @Decision(value = MALFORMED, method = HttpMethod.POST)
     public Problem malformed(RestContext context,
-                            @RequestBody UserCreateRequest createRequest,
+                            @RequestBody EmployeeCreateRequest createRequest,
                             Errors errors) {
         ValidationUtils.invokeValidator(validator, createRequest, errors);
         if (errors.hasErrors()) {
@@ -64,7 +62,7 @@ public class EmployeesResource {
 
     @Decision(value = CONFLICT, method = HttpMethod.POST)
     public Problem conflict(RestContext context,
-                            @DecisionContext UserCreateRequest createRequest) {
+                            @DecisionContext EmployeeCreateRequest createRequest) {
         long cnt = employeeSearchService.countByEmail(new EmailAddress(createRequest.getEmail()));
         if (cnt > 0) {
             return new ConstraintViolationProblem(Status.CONFLICT, List.of(new Violation("email", "duplicated")));
@@ -73,7 +71,7 @@ public class EmployeesResource {
     }
 
     @Decision(POST)
-    public Employee saveUser(@DecisionContext UserCreateRequest createRequest) {
+    public Employee saveUser(@DecisionContext EmployeeCreateRequest createRequest) {
         Employee employee = new Employee(
                 new FirstName(createRequest.getFirstName()),
                 new LastName(createRequest.getLastName()),

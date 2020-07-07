@@ -1,6 +1,7 @@
 package net.unit8.sillage.example.persistence.entity;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "employee")
@@ -11,7 +12,7 @@ public class EmployeeEntity {
     private String email;
     private String lastName;
     private String firstName;
-    private Long salary;
+    private BigDecimal salary;
     private String currencyUnit;
     private String version;
 
@@ -47,11 +48,11 @@ public class EmployeeEntity {
         this.firstName = firstName;
     }
 
-    public Long getSalary() {
+    public BigDecimal getSalary() {
         return salary;
     }
 
-    public void setSalary(Long salary) {
+    public void setSalary(BigDecimal salary) {
         this.salary = salary;
     }
 

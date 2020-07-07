@@ -33,5 +33,10 @@ public class EmployeeController {
 		ClassResource resource = resourceFactory.create(EmployeeResource.class);
 		return resourceEngine.run(resource, request, response);
 	}
-
+	@RequestMapping("/employee/{id}/promotion")
+	public Object promotion(HttpServletRequest request,
+							HttpServletResponse response) {
+		ClassResource resource = resourceFactory.create(PromotionResource.class);
+		return resourceEngine.run(resource, request, response);
+	}
 }
