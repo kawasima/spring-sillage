@@ -1,4 +1,4 @@
-package net.unit8.sillage.example.user;
+package net.unit8.sillage.example.employee;
 
 import net.unit8.sillage.ResourceEngine;
 import net.unit8.sillage.data.ClassResource;

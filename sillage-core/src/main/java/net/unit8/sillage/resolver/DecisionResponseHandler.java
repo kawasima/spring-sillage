@@ -14,7 +14,7 @@ public class DecisionResponseHandler implements HandlerMethodReturnValueHandler 
     }
 
     @Override
-    public void handleReturnValue(Object returnValue, MethodParameter returnType, ModelAndViewContainer mavContainer, NativeWebRequest webRequest) throws Exception {
+    public void handleReturnValue(Object returnValue, MethodParameter returnType, ModelAndViewContainer mavContainer, NativeWebRequest webRequest) {
         mavContainer.setRequestHandled(false);
         HttpServletRequest request = webRequest.getNativeRequest(HttpServletRequest.class);
         request.setAttribute("message", returnValue);

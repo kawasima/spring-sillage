@@ -1,4 +1,4 @@
-package net.unit8.sillage.example.user;
+package net.unit8.sillage.example.employee;
 
 import net.unit8.sillage.Decision;
 import net.unit8.sillage.data.RestContext;
@@ -6,9 +6,9 @@ import net.unit8.sillage.example.domain.EmailAddress;
 import net.unit8.sillage.example.domain.Employee;
 import net.unit8.sillage.example.domain.FirstName;
 import net.unit8.sillage.example.domain.LastName;
-import net.unit8.sillage.example.user.boundary.EmployeeCreateRequest;
-import net.unit8.sillage.example.user.service.EmployeeModifyService;
-import net.unit8.sillage.example.user.service.EmployeeSearchService;
+import net.unit8.sillage.example.employee.boundary.EmployeeCreateRequest;
+import net.unit8.sillage.example.employee.service.EmployeeModifyService;
+import net.unit8.sillage.example.employee.service.EmployeeSearchService;
 import net.unit8.sillage.resource.AllowedMethods;
 import net.unit8.sillage.resource.DecisionContext;
 import org.javamoney.moneta.Money;

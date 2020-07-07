@@ -19,10 +19,9 @@ public class SillageConfiguration {
     @Bean
     public Jackson2ObjectMapperBuilder jackson2ObjectMapperBuilder() {
         return  new Jackson2ObjectMapperBuilder()
-                .indentOutput(true)
                 .dateFormat(new SimpleDateFormat("yyyy-MM-dd"))
-                .modulesToInstall(new ProblemModule().withStackTraces())
-                .modulesToInstall(new ParameterNamesModule());
+                .modules(new ProblemModule().withStackTraces(),
+                        new ParameterNamesModule());
     }
 
     @Bean

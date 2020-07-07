@@ -61,4 +61,16 @@ public class Employee implements Serializable {
     public UUID getVersion() {
         return version;
     }
+
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "id=" + id +
+                ", firstName=" + firstName +
+                ", lastName=" + lastName +
+                ", emailAddress=" + emailAddress +
+                ", salary=" + salary +
+                ", version=" + version +
+                '}';
+    }
 }

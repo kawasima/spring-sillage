@@ -1,10 +1,10 @@
-package net.unit8.sillage.example.user.boundary;
+package net.unit8.sillage.example.employee.boundary;
 
 import java.io.Serializable;
 
 public class PromotionCreateRequest implements Serializable {
-    private Long amount;
-    private String currencyUnit;
+    private final Long amount;
+    private final String currencyUnit;
 
     public PromotionCreateRequest(Long amount, String currencyUnit) {
         this.amount = amount;

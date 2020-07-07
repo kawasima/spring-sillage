@@ -1,4 +1,4 @@
-package net.unit8.sillage.example.user.service;
+package net.unit8.sillage.example.employee.service;
 
 import net.unit8.sillage.example.domain.Employee;
 import net.unit8.sillage.example.port.out.UpdateEmployeeStatePort;

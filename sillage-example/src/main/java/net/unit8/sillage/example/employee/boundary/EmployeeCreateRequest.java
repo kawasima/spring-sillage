@@ -1,10 +1,11 @@
-package net.unit8.sillage.example.user.boundary;
+package net.unit8.sillage.example.employee.boundary;
 
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Email;
+import java.io.Serializable;
 
-public class EmployeeUpdateRequest {
+public class EmployeeCreateRequest implements Serializable {
     @Email
     private final String email;
     @Length(max = 255)
@@ -12,7 +13,7 @@ public class EmployeeUpdateRequest {
     @Length(max = 255)
     private final String firstName;
 
-    public EmployeeUpdateRequest(String email, String lastName, String firstName) {
+    public EmployeeCreateRequest(String email, String lastName, String firstName) {
         this.email = email;
         this.lastName = lastName;
         this.firstName = firstName;

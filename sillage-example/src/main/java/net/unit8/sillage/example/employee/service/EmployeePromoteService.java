@@ -1,4 +1,4 @@
-package net.unit8.sillage.example.user.service;
+package net.unit8.sillage.example.employee.service;
 
 import net.unit8.sillage.example.domain.Employee;
 import net.unit8.sillage.example.port.out.PromotePort;
@@ -10,7 +10,6 @@ import org.springframework.transaction.support.TransactionTemplate;
 import javax.money.MonetaryAmount;
 import javax.money.convert.CurrencyConversion;
 import javax.money.convert.ExchangeRateProvider;
-import javax.money.convert.MonetaryConversions;
 import java.util.UUID;
 
 @Component
@@ -22,11 +21,12 @@ public class EmployeePromoteService {
 
     public EmployeePromoteService(UpdateEmployeeStatePort updateEmployeeStatePort,
                                   PromotePort promotePort,
-                                  PlatformTransactionManager transactionManager) {
+                                  PlatformTransactionManager transactionManager,
+                                  ExchangeRateProvider rateProvider) {
         this.updateEmployeeStatePort = updateEmployeeStatePort;
         this.promotePort = promotePort;
         this.transactionManager = transactionManager;
-        rateProvider = MonetaryConversions.getExchangeRateProvider("IMF");
+        this.rateProvider = rateProvider;
     }
 
     public Employee promote(Employee employee, MonetaryAmount amount) {
